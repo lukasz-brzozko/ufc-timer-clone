@@ -3,11 +3,13 @@ import { selectContestants, update } from './timerSlice';
 
 import Contestant from './subcomponents/Contestant';
 
+import styles from './Timer.module.scss';
+
 function Timer(): JSX.Element {
   const contestants = useAppSelector(selectContestants);
 
   return (
-    <div className="timer">
+    <div className={styles.timer}>
       <div className="clock">
         Timer
       </div>
