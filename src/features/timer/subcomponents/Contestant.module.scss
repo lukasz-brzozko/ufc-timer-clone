@@ -1,0 +1,51 @@
+.color {
+  overflow: hidden;
+
+  &Text {
+    color: orange;
+  }
+}
+
+.contestant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  max-width: 250px;
+  height: 60px;
+  color: #fff;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background-image: linear-gradient(0deg, #3f4146 0%, #919192 100%);
+  background-position-y: 40%;
+  background-size: 100% 400%;
+}
+
+.name {
+  font-size: 1.1em;
+}
+
+.rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 15px;
+  height: 20px;
+  margin-right: 5px;
+  padding-left: 2px;
+  color: #3f4146;
+  font-weight: bolder;
+  font-size: 0.9em;
+  text-align: center;
+  background-color: #9b9ca3;
+}
+
+.text {
+  &Container {
+    display: flex;
+    align-self: center;
+    justify-content: flex-start;
+  }
+}

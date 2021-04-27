@@ -3,15 +3,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../../app/store';
 
-type ContestantType = {
+export type ContestantType = {
   color: string;
   id: number;
-  name: string;
+  lastName: string;
   rank: 'C' | number | null
 };
 
+export type ContestantsTuple = [ContestantType, ContestantType];
+
 export interface TimerState {
-  contestants: [ContestantType, ContestantType];
+  contestants: ContestantsTuple;
 }
 
 const initialState: TimerState = {
@@ -19,14 +21,14 @@ const initialState: TimerState = {
     {
       color: 'red',
       id: 1,
-      name: 'Contestant 1',
-      rank: null,
+      lastName: 'Contestant 1',
+      rank: 1,
     },
     {
       color: 'blue',
       id: 2,
-      name: 'Contestant 2',
-      rank: null,
+      lastName: 'Contestant 2',
+      rank: 2,
     },
   ],
 };
@@ -41,7 +43,7 @@ export const timerSlice = createSlice({
   },
 });
 
-export const selectContestants = (state: RootState) => state.timer.contestants;
+export const selectContestants = (state: RootState): ContestantsTuple => state.timer.contestants;
 
 export const { update } = timerSlice.actions;
 

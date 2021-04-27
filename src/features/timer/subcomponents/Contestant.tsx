@@ -1,21 +1,25 @@
 import { useState } from 'react';
 
-interface ContestantProps {
-  color: string;
-  contestantName: string;
-  rank: number | 'C' | null;
-}
+import { ContestantType } from '../timerSlice';
 
-function Contestant({ color, contestantName, rank }: ContestantProps): JSX.Element {
-  const [name, setName] = useState(contestantName);
+import styles from './Contestant.module.scss';
+
+type ContestantProps = ContestantType;
+
+function Contestant({ color, lastName, rank }: ContestantProps): JSX.Element {
+  const [name, setName] = useState(lastName);
   const [ranking, setRanking] = useState(rank);
   const [actualColor, setActualColor] = useState(color);
 
   return (
-    <div>
-      <span>{ranking}</span>
-      <span>{name}</span>
-      <span>{actualColor}</span>
+    <div className={styles.contestant}>
+      <div className={styles.textContainer}>
+        <span className={styles.rank}>{ranking}</span>
+        <span className={styles.name}>{name}</span>
+      </div>
+      <div className={styles.color}>
+        <span className={styles.colorText}>{actualColor}</span>
+      </div>
     </div>
   );
 }

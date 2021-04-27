@@ -7,23 +7,24 @@ function Timer(): JSX.Element {
   const contestants = useAppSelector(selectContestants);
 
   return (
-    <>
-      <div>
+    <div className="timer">
+      <div className="clock">
         Timer
       </div>
       {contestants.map(
         ({
-          color, id, name, rank,
+          color, id, lastName, rank,
         }) => (
           <Contestant
             color={color}
-            contestantName={name}
+            id={id}
             key={id}
+            lastName={lastName}
             rank={rank}
           />
         ),
       )}
-    </>
+    </div>
   );
 }
 
