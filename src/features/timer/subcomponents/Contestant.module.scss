@@ -1,5 +1,22 @@
 .color {
-  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 100%;
+  background-color: #555;
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 10px;
+    height: 15px;
+    background-color: inherit;
+    transform: translate(-50%, -50%);
+    content: '';
+  }
 
   &Text {
     color: orange;
@@ -10,8 +27,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 200px;
-  max-width: 250px;
+  order: -1;
+  width: fit-content;
   height: 60px;
   color: #fff;
   font-family: 'Share Tech Mono', monospace;
@@ -20,6 +37,17 @@
   background-image: linear-gradient(0deg, #3f4146 0%, #919192 100%);
   background-position-y: 40%;
   background-size: 100% 400%;
+
+  & + & {
+    flex-direction: row-reverse;
+    order: 1;
+  }
+
+  & + & > .color::before {
+    right: 0;
+    left: auto;
+    transform: translate(50%, -50%);
+  }
 }
 
 .name {
@@ -40,6 +68,10 @@
   font-size: 0.9em;
   text-align: center;
   background-color: #9b9ca3;
+
+  &Champion {
+    background-color: #b5a772;
+  }
 }
 
 .text {
@@ -47,5 +79,8 @@
     display: flex;
     align-self: center;
     justify-content: flex-start;
+    min-width: 200px;
+    max-width: 250px;
+    padding-left: 2em;
   }
 }
