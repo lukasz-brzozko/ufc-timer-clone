@@ -1,12 +1,13 @@
 @use '../../../../scss/colors.scss';
 @use '../../../../scss/typography.scss';
+@use '../../../../scss/variables.scss';
 
 .color {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: variables.$color-block-width;
   height: 100%;
   background-color: colors.$red;
 
@@ -14,10 +15,10 @@
     position: absolute;
     top: 50%;
     left: 0;
-    width: 10px;
-    height: 15px;
+    width: 8px;
+    height: 20px;
     background-color: inherit;
-    transform: translate(-50%, -50%);
+    transform: translate(-100%, -50%);
     content: '';
   }
 
@@ -53,7 +54,7 @@
   & + & > .color::before {
     right: 0;
     left: auto;
-    transform: translate(50%, -50%);
+    transform: translate(100%, -50%);
   }
 }
 
