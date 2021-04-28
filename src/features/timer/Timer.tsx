@@ -1,6 +1,7 @@
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectContestants, update } from './timerSlice';
 
+import Clock from './subcomponents/Clock';
 import Contestant from './subcomponents/Contestant';
 
 import styles from './Timer.module.scss';
@@ -10,9 +11,7 @@ function Timer(): JSX.Element {
 
   return (
     <div className={styles.timer}>
-      <div className="clock">
-        Timer
-      </div>
+      <Clock />
       {contestants.map(
         ({
           color, id, lastName, rank,
