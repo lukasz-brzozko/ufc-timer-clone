@@ -1,9 +1,12 @@
+@use '../../../../scss/colors.scss';
+@use '../../../../scss/typography.scss';
+
 .clock {
   display: flex;
   justify-content: center;
   height: 100%;
   padding: 0 1.5em;
-  background-image: linear-gradient(180deg, #5d5d5d 0%, #373737 100%);
+  background-image: linear-gradient(180deg, colors.$clock-lighter 0%, colors.$clock-darker 100%);
 }
 
 .time {
@@ -12,7 +15,8 @@
   margin-left: 0.5em;
   color: #fff;
   font-size: 2.5em;
-  font-family: 'Nunito', sans-serif;
+  font-family: typography.$clock-font-family;
+  user-select: none;
 
   &Separator {
     height: 100%;

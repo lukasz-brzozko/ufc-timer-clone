@@ -1,3 +1,6 @@
+@use '../../../../scss/colors.scss';
+@use '../../../../scss/typography.scss';
+
 .color {
   position: relative;
   display: flex;
@@ -5,7 +8,7 @@
   justify-content: center;
   width: 150px;
   height: 100%;
-  background-color: #555;
+  background-color: colors.$red;
 
   &::before {
     position: absolute;
@@ -19,7 +22,7 @@
   }
 
   &Text {
-    color: orange;
+    font-weight: lighter;
   }
 }
 
@@ -31,16 +34,20 @@
   height: 100%;
   color: #fff;
   font-size: 1.3em;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: typography.$timer-font-family;
   letter-spacing: 2px;
   text-transform: uppercase;
-  background-image: linear-gradient(0deg, #3f4146 0%, #919192 100%);
+  background-image: linear-gradient(0deg, colors.$contestant-darker 0%, colors.$contestant-lighter 100%);
   background-position-y: 40%;
   background-size: 100% 400%;
 
   & + & {
     flex-direction: row-reverse;
     order: 1;
+  }
+
+  & + & > .color {
+    background-color: colors.$blue;
   }
 
   & + & > .color::before {
@@ -59,14 +66,14 @@
   height: 20px;
   margin-right: 5px;
   padding-left: 2px;
-  color: #3f4146;
+  color: colors.$rank-text;
   font-weight: bolder;
-  font-size: 0.9em;
+  font-size: 0.7em;
   text-align: center;
-  background-color: #9b9ca3;
+  background-color: colors.$rank;
 
-  &Champion {
-    background-color: #b5a772;
+  &champion {
+    background-color: colors.$gold;
   }
 }
 

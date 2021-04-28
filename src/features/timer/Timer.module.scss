@@ -1,6 +1,8 @@
+@use '../../scss/variables.scss';
+
 .timer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  height: variables.$timer-height;
 }
