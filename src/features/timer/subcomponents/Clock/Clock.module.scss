@@ -7,9 +7,16 @@
 }
 
 .time {
+  display: flex;
+  align-items: center;
   margin-left: 0.5em;
   color: #fff;
   font-size: 2.5em;
+  font-family: 'Nunito', sans-serif;
+
+  &Separator {
+    height: 100%;
+  }
 }
 
 .ufcLogo {

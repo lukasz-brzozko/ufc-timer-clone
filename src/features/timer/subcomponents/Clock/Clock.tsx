@@ -13,7 +13,7 @@ function Clock(): JSX.Element {
   const renderer = ({ minutes, seconds }: RendererProps) => (
     <span className={styles.time}>
       {zeroPad(minutes, 1)}
-      :
+      <span className={styles.timeSeparator}>:</span>
       {zeroPad(seconds, 2)}
     </span>
   );
