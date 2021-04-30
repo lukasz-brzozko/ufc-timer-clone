@@ -1,0 +1,33 @@
+@use '../../../../scss/colors.scss';
+
+.round {
+  display: block;
+  height: 100%;
+  background-color: colors.$clock-darker;
+
+  &Active {
+    width: 200%;
+    background-color: transparent;
+    background-image: linear-gradient(to right, #fff 50%, colors.$clock-darker 50%, colors.$clock-darker 100%);
+    transform: translateX(-25%);
+  }
+
+  &Wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 5px;
+    margin-left: 3%;
+    overflow: hidden;
+    background-color: none;
+    border-radius: 6px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  &Complete {
+    background-color: colors.$white-pure;
+  }
+}
