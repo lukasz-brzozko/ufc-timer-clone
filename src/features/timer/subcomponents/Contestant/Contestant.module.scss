@@ -3,23 +3,28 @@
 @use '../../../../scss/variables.scss';
 
 .color {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: variables.$color-block-width;
   height: 100%;
+  overflow: hidden;
   background-color: colors.$red;
 
-  &::before {
+  &Sign {
     position: absolute;
     top: 50%;
-    left: 0;
+    right: 0;
     width: 8px;
     height: 20px;
-    background-color: inherit;
-    transform: translate(-100%, -50%);
-    content: '';
+    background-color: colors.$red;
+    transform: translateY(-50%);
+  }
+
+  &SignSecond {
+    right: auto;
+    left: 0;
+    background-color: colors.$blue;
   }
 
   &Text {
@@ -27,12 +32,27 @@
   }
 }
 
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 250px;
+  height: 100%;
+  padding: 0 1.5em;
+  overflow: hidden;
+  word-wrap: unset;
+}
+
 .contestant {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   order: -1;
   height: 100%;
+  overflow: hidden;
   color: #fff;
   font-size: 1.3em;
   font-family: typography.$timer-font-family;
@@ -49,12 +69,6 @@
 
   & + & > .color {
     background-color: colors.$blue;
-  }
-
-  & + & > .color::before {
-    right: 0;
-    left: auto;
-    transform: translate(100%, -50%);
   }
 }
 
@@ -75,17 +89,5 @@
 
   &champion {
     background-color: colors.$gold;
-  }
-}
-
-.text {
-  &Container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-width: 200px;
-    max-width: 250px;
-    height: 100%;
-    padding-left: 2em;
   }
 }
