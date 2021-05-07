@@ -77,7 +77,7 @@
   justify-content: center;
   box-sizing: border-box;
   width: 15px;
-  height: 20px;
+  height: 1.5em;
   margin-right: 5px;
   padding: 0 1px;
   color: colors.$rank-text;
@@ -95,6 +95,7 @@
 .text {
   &Wrapper {
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 }
