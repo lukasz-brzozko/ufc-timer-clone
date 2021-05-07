@@ -42,7 +42,6 @@
   height: 100%;
   padding: 0 1.5em;
   overflow: hidden;
-  word-wrap: unset;
 }
 
 .contestant {
@@ -80,14 +79,22 @@
   width: 15px;
   height: 20px;
   margin-right: 5px;
-  padding-left: 2px;
+  padding: 0 1px;
   color: colors.$rank-text;
   font-weight: bolder;
-  font-size: 0.7em;
+  font-size: 0.6em;
+  letter-spacing: -1px;
   text-align: center;
   background-color: colors.$rank;
 
   &champion {
     background-color: colors.$gold;
+  }
+}
+
+.text {
+  &Wrapper {
+    display: flex;
+    justify-content: center;
   }
 }
