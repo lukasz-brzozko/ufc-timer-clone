@@ -6,8 +6,6 @@ import { selectContestants, update } from './timerSlice';
 import Clock from './subcomponents/Clock';
 import Contestant from './subcomponents/Contestant';
 
-import clockStyles from './subcomponents/Clock/Clock.module.scss';
-import contestantStyles from './subcomponents/Contestant/Contestant.module.scss';
 import styles from './Timer.module.scss';
 
 function Timer(): JSX.Element {
@@ -16,13 +14,13 @@ function Timer(): JSX.Element {
 
   const firstContestant = useRef<HTMLDivElement>(null);
   const firstContestantColor = useRef<HTMLDivElement>(null);
-  const firstContestantColorSign = useRef<HTMLDivElement>(null);
+  const firstContestantColorSign = useRef<HTMLSpanElement>(null);
   const firstContestantText = useRef<HTMLDivElement>(null);
   const firstContestantTextBlock = useRef<HTMLDivElement>(null);
 
   const secondContestant = useRef<HTMLDivElement>(null);
   const secondContestantColor = useRef<HTMLDivElement>(null);
-  const secondContestantColorSign = useRef<HTMLDivElement>(null);
+  const secondContestantColorSign = useRef<HTMLSpanElement>(null);
   const secondContestantText = useRef<HTMLDivElement>(null);
   const secondContestantTextBlock = useRef<HTMLDivElement>(null);
 
@@ -49,7 +47,11 @@ function Timer(): JSX.Element {
         x: '0',
       }, '-=0.8')
       .to(secondContestantColorSign.current, { duration: '0.4', width: '8' }, '-=0.4')
-
+      // meanwhile, show contestants' names
+      .fromTo(firstContestantText.current, { opacity: '0' }, { duration: '0.1', opacity: '1' }, '-=0.4')
+      .fromTo(firstContestantText.current, { x: '-5%' }, { duration: '0.4', x: '0%' }, '-=0.4')
+      .fromTo(secondContestantText.current, { opacity: '0' }, { duration: '0.1', opacity: '1' }, '-=0.4')
+      .fromTo(secondContestantText.current, { x: '5%' }, { duration: '0.4', x: '0%' }, '-=0.4')
       // show trunk colors
       .fromTo(firstContestantColor.current, { width: '0' }, { width: '150' }, '+=1')
       .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`)
