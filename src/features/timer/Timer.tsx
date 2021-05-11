@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -15,12 +16,14 @@ function Timer(): JSX.Element {
   const firstContestant = useRef<HTMLDivElement>(null);
   const firstContestantColor = useRef<HTMLDivElement>(null);
   const firstContestantColorSign = useRef<HTMLSpanElement>(null);
+  const firstContestantColorText = useRef<HTMLSpanElement>(null);
   const firstContestantText = useRef<HTMLDivElement>(null);
   const firstContestantTextBlock = useRef<HTMLDivElement>(null);
 
   const secondContestant = useRef<HTMLDivElement>(null);
   const secondContestantColor = useRef<HTMLDivElement>(null);
   const secondContestantColorSign = useRef<HTMLSpanElement>(null);
+  const secondContestantColorText = useRef<HTMLSpanElement>(null);
   const secondContestantText = useRef<HTMLDivElement>(null);
   const secondContestantTextBlock = useRef<HTMLDivElement>(null);
 
@@ -52,18 +55,30 @@ function Timer(): JSX.Element {
       .fromTo(firstContestantText.current, { x: '-5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.4')
       .fromTo(secondContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.8')
       .fromTo(secondContestantText.current, { x: '5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.8')
-    // show trunk colors
-      // firtsly, blink color signs
+      // show trunk colors
+      // firstly, blink color signs
       .addLabel('blinking', '+=0.5')
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' }, 'blinking')
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' })
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
       //
-      .fromTo(firstContestantColor.current, { width: '0' }, { width: '150' }, '+=0.4')
-      .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`)
-      .to(firstContestantColor.current, { width: '0' }, '+=1')
-      .to(secondContestantColor.current, { width: '0' }, `-=${defaultDuration}`);
+      .addLabel('widthenColorSigns', '-=0.4')
+      .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'widthenColorSigns')
+      .fromTo(firstContestantColor.current, { width: '0', x: '100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4')
+      .to(firstContestantColor.current, { duration: '0.4', x: '0' }, 'widthenColorSigns+=0.8')
+      .fromTo(firstContestantColorText.current, { x: '100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'widthenColorSigns+=1')
+      .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
+      .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4')
+      .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'widthenColorSigns+=0.8')
+      .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'widthenColorSigns+=1');
+
+    // .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
+    // .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4');
+
+    // .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`);
+    // .to(firstContestantColor.current, { width: '0' }, '+=1')
+    // .to(secondContestantColor.current, { width: '0' }, `-=${defaultDuration}`);
   }, [timer]);
 
   return (
@@ -83,6 +98,7 @@ function Timer(): JSX.Element {
             refContestant={index > 0 ? secondContestant : firstContestant}
             refColor={index > 0 ? secondContestantColor : firstContestantColor}
             refColorSign={index > 0 ? secondContestantColorSign : firstContestantColorSign}
+            refColorText={index > 0 ? secondContestantColorText : firstContestantColorText}
             refText={index > 0 ? secondContestantText : firstContestantText}
             refTextBlock={index > 0 ? secondContestantTextBlock : firstContestantTextBlock}
           />
