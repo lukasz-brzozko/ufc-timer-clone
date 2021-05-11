@@ -27,11 +27,46 @@ function Timer(): JSX.Element {
   const secondContestantText = useRef<HTMLDivElement>(null);
   const secondContestantTextBlock = useRef<HTMLDivElement>(null);
 
+  const showTrunkColors = () => {
+    const tl = gsap.timeline({ defaults: { duration: 0.6 } });
+    tl
+      .addLabel('showColors')
+      .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'showColors')
+      .fromTo(firstContestantColor.current, { width: '0', x: '100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
+      .to(firstContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
+      .fromTo(firstContestantColorText.current, { x: '100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1')
+      .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'showColors')
+      .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
+      .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
+      .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1');
+
+    return tl;
+  };
+
+  const hideTrunkColors = () => {
+    const tl = gsap.timeline({ defaults: { duration: '0.4', ease: 'power1.inOut' } });
+    tl
+      .addLabel('hideColors')
+      .to(firstContestantColorText.current, { x: '200%' }, 'hideColors')
+      .to(firstContestantColor.current, { x: '100%' }, 'hideColors+=0.2')
+      .to(firstContestantColorSign.current, { width: '8', x: '150' }, 'hideColors+=0.2')
+      .to(firstContestantColor.current, { width: '0' }, 'hideColors+=0.4')
+      .to(firstContestantColorSign.current, { x: '0' }, 'hideColors+=0.4')
+
+      .to(secondContestantColorText.current, { x: '-200%' }, 'hideColors')
+      .to(secondContestantColor.current, { x: '-100%' }, 'hideColors+=0.2')
+      .to(secondContestantColorSign.current, { width: '8', x: '-150' }, 'hideColors+=0.2')
+      .to(secondContestantColor.current, { width: '0' }, 'hideColors+=0.4')
+      .to(secondContestantColorSign.current, { x: '0' }, 'hideColors+=0.4');
+
+    return tl;
+  };
   useEffect(() => {
     const defaultDuration = 0.6;
-    const tl = gsap.timeline({ defaults: { duration: defaultDuration } });
 
-    tl
+    const master = gsap.timeline({ defaults: { duration: defaultDuration } });
+
+    master
       // move in contestant names
       .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
       .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, `-=${defaultDuration}`)
@@ -63,15 +98,8 @@ function Timer(): JSX.Element {
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' })
       .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
       //
-      .addLabel('widthenColorSigns', '-=0.4')
-      .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'widthenColorSigns')
-      .fromTo(firstContestantColor.current, { width: '0', x: '100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4')
-      .to(firstContestantColor.current, { duration: '0.4', x: '0' }, 'widthenColorSigns+=0.8')
-      .fromTo(firstContestantColorText.current, { x: '100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'widthenColorSigns+=1')
-      .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
-      .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4')
-      .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'widthenColorSigns+=0.8')
-      .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'widthenColorSigns+=1');
+      .add(showTrunkColors())
+      .add(hideTrunkColors(), '+=1');
 
     // .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
     // .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4');
