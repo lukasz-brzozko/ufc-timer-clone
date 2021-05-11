@@ -38,7 +38,7 @@ function Timer(): JSX.Element {
         ease: 'expo.out',
         width: '100%',
         x: '0',
-      }, '+=1')
+      })
       .to(firstContestantColorSign.current, { duration: '0.4', width: '8' })
       .fromTo(secondContestantColorSign.current, { width: '8', x: '250' }, {
         duration: '0.4',
@@ -48,12 +48,19 @@ function Timer(): JSX.Element {
       }, '-=0.8')
       .to(secondContestantColorSign.current, { duration: '0.4', width: '8' }, '-=0.4')
       // meanwhile, show contestants' names
-      .fromTo(firstContestantText.current, { opacity: '0' }, { duration: '0.1', opacity: '1' }, '-=0.4')
-      .fromTo(firstContestantText.current, { x: '-5%' }, { duration: '0.4', x: '0%' }, '-=0.4')
-      .fromTo(secondContestantText.current, { opacity: '0' }, { duration: '0.1', opacity: '1' }, '-=0.4')
-      .fromTo(secondContestantText.current, { x: '5%' }, { duration: '0.4', x: '0%' }, '-=0.4')
-      // show trunk colors
-      .fromTo(firstContestantColor.current, { width: '0' }, { width: '150' }, '+=1')
+      .fromTo(firstContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.4')
+      .fromTo(firstContestantText.current, { x: '-5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.4')
+      .fromTo(secondContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.8')
+      .fromTo(secondContestantText.current, { x: '5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.8')
+    // show trunk colors
+      // firtsly, blink color signs
+      .addLabel('blinking', '+=0.5')
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' }, 'blinking')
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
+      //
+      .fromTo(firstContestantColor.current, { width: '0' }, { width: '150' }, '+=0.4')
       .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`)
       .to(firstContestantColor.current, { width: '0' }, '+=1')
       .to(secondContestantColor.current, { width: '0' }, `-=${defaultDuration}`);
