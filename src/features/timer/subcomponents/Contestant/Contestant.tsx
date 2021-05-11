@@ -11,7 +11,8 @@ type ContestantModifier = {
 type ContestantRefs = {
   refContestant: React.RefObject<HTMLDivElement>
   refColor: React.RefObject<HTMLDivElement>
-  refColorSign: React.RefObject<HTMLDivElement>
+  refColorSign: React.RefObject<HTMLSpanElement>
+  refColorText: React.RefObject<HTMLSpanElement>
   refText: React.RefObject<HTMLDivElement>
   refTextBlock: React.RefObject<HTMLDivElement>
 };
@@ -26,6 +27,7 @@ function Contestant({
   refContestant,
   refColor,
   refColorSign,
+  refColorText,
   refText,
   refTextBlock,
 }: ContestantProps): JSX.Element {
@@ -44,7 +46,7 @@ function Contestant({
         <span className={`${styles.colorSign}${modifierClass}`} ref={refColorSign} />
       </div>
       <div className={styles.color} ref={refColor}>
-        <span className={styles.colorText}>{actualColor}</span>
+        <span className={styles.colorText} ref={refColorText}>{actualColor}</span>
       </div>
     </div>
   );
