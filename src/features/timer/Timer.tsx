@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectContestants, update } from './timerSlice';
+import { selectTimeline } from '../timeline/timelineSlice';
 
 import Clock from './subcomponents/Clock';
 import Contestant from './subcomponents/Contestant';
@@ -10,6 +11,7 @@ import Contestant from './subcomponents/Contestant';
 import styles from './Timer.module.scss';
 
 function Timer(): JSX.Element {
+  const masterTl = useAppSelector(selectTimeline);
   const contestants = useAppSelector(selectContestants);
   const timer = useRef<HTMLDivElement>(null);
 
@@ -62,14 +64,15 @@ function Timer(): JSX.Element {
     return tl;
   };
   useEffect(() => {
-    const defaultDuration = 0.6;
+    // const defaultDuration = 0.6;
 
-    const master = gsap.timeline({ defaults: { duration: defaultDuration } });
+    // const master = gsap.timeline({ defaults: { duration: defaultDuration } });
 
-    master
+    masterTl
+      .addLabel('showNames')
       // move in contestant names
       .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
-      .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, `-=${defaultDuration}`)
+      .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '-=0.6')
       // move in color signs
       .fromTo(firstContestantColorSign.current, { width: '8', x: '-250' }, {
         duration: '0.4',
@@ -107,6 +110,7 @@ function Timer(): JSX.Element {
     // .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`);
     // .to(firstContestantColor.current, { width: '0' }, '+=1')
     // .to(secondContestantColor.current, { width: '0' }, `-=${defaultDuration}`);
+    console.log(masterTl);
   }, [timer]);
 
   return (
