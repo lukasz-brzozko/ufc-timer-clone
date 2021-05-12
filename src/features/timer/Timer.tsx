@@ -93,13 +93,13 @@ function Timer(): JSX.Element {
       // show trunk colors
       // firstly, blink color signs
       .addLabel('blinking', '+=0.5')
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' }, 'blinking')
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.1' })
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.1' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' }, 'blinking')
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' })
       //
       .add(showTrunkColors())
-      .add(hideTrunkColors(), '+=1');
+      .add(hideTrunkColors(), '+=2');
 
     // .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
     // .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4');
