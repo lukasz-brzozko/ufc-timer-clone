@@ -1,0 +1,24 @@
+@use '../../scss/colors.scss';
+@use '../../scss/typography.scss';
+
+.info {
+  color: colors.$white-pure;
+  font-size: 1.1em;
+  font-family: typography.$timer-font-family;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  &Box {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 0.25em;
+    background-image: linear-gradient(0deg, colors.$black-pure 0%, colors.$clock-darker 100%);
+    transform: translateX(-50%);
+  }
+}
