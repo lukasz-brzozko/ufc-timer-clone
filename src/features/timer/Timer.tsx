@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -30,7 +29,7 @@ function Timer(): JSX.Element {
   const secondContestantTextBlock = useRef<HTMLDivElement>(null);
 
   const showTrunkColors = () => {
-    const tl = gsap.timeline({ defaults: { duration: 0.6 } });
+    const tl = gsap.timeline({ defaults: { duration: '0.6' } });
     tl
       .addLabel('showColors')
       .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'showColors')
@@ -42,6 +41,45 @@ function Timer(): JSX.Element {
       .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
       .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1');
 
+    return tl;
+  };
+  const blink = () => {
+    const tl = gsap.timeline({ defaults: { duration: '0.6' } });
+    tl
+      .addLabel('blinking')
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' }, 'blinking')
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' })
+      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' });
+
+    return tl;
+  };
+
+  const showContestants = () => {
+    const tl = gsap.timeline({ defaults: { duration: '0.6' } })
+    // move in contestant names
+      .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
+      .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '-=0.6')
+    // move in color signs
+      .fromTo(firstContestantColorSign.current, { width: '8', x: '-250' }, {
+        duration: '0.4',
+        ease: 'expo.out',
+        width: '100%',
+        x: '0',
+      })
+      .to(firstContestantColorSign.current, { duration: '0.4', width: '8' })
+      .fromTo(secondContestantColorSign.current, { width: '8', x: '250' }, {
+        duration: '0.4',
+        ease: 'expo.out',
+        width: '100%',
+        x: '0',
+      }, '-=0.8')
+      .to(secondContestantColorSign.current, { duration: '0.4', width: '8' }, '-=0.4')
+    // meanwhile, show contestants' names
+      .fromTo(firstContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.4')
+      .fromTo(firstContestantText.current, { x: '-5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.4')
+      .fromTo(secondContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.8')
+      .fromTo(secondContestantText.current, { x: '5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.8');
     return tl;
   };
 
@@ -64,52 +102,11 @@ function Timer(): JSX.Element {
     return tl;
   };
   useEffect(() => {
-    // const defaultDuration = 0.6;
-
-    // const master = gsap.timeline({ defaults: { duration: defaultDuration } });
-
     masterTl
-      .addLabel('showNames')
-      // move in contestant names
-      .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
-      .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '-=0.6')
-      // move in color signs
-      .fromTo(firstContestantColorSign.current, { width: '8', x: '-250' }, {
-        duration: '0.4',
-        ease: 'expo.out',
-        width: '100%',
-        x: '0',
-      })
-      .to(firstContestantColorSign.current, { duration: '0.4', width: '8' })
-      .fromTo(secondContestantColorSign.current, { width: '8', x: '250' }, {
-        duration: '0.4',
-        ease: 'expo.out',
-        width: '100%',
-        x: '0',
-      }, '-=0.8')
-      .to(secondContestantColorSign.current, { duration: '0.4', width: '8' }, '-=0.4')
-      // meanwhile, show contestants' names
-      .fromTo(firstContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.4')
-      .fromTo(firstContestantText.current, { x: '-5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.4')
-      .fromTo(secondContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.8')
-      .fromTo(secondContestantText.current, { x: '5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.8')
-      // show trunk colors
-      // firstly, blink color signs
-      .addLabel('blinking', '+=0.5')
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' }, 'blinking')
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' })
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '0', duration: '0.07' })
-      .to([firstContestantColorSign.current, secondContestantColorSign.current], { autoAlpha: '1', duration: '0.07' })
-      //
-      .add(showTrunkColors())
-      .add(hideTrunkColors(), '+=2');
-
-    // .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'widthenColorSigns')
-    // .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { ease: 'power1.inOut', width: '150' }, 'widthenColorSigns+=0.4');
-
-    // .fromTo(secondContestantColor.current, { width: '0' }, { width: '150' }, `-=${defaultDuration}`);
-    // .to(firstContestantColor.current, { width: '0' }, '+=1')
-    // .to(secondContestantColor.current, { width: '0' }, `-=${defaultDuration}`);
+      .add(showContestants(), 'showContestants')
+      .add(blink(), 'blink+=0.5')
+      .add(showTrunkColors(), 'showTrunkColors')
+      .add(hideTrunkColors(), 'hideTrunkColors+=2');
     console.log(masterTl);
   }, [timer]);
 
