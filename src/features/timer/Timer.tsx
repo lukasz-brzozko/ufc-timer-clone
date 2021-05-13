@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectContestants, update } from './timerSlice';
-import { selectTimeline } from '../timeline/timelineSlice';
+import { setMessage } from '../info/infoSlice';
 
 import Clock from './subcomponents/Clock';
 import Contestant from './subcomponents/Contestant';
@@ -10,8 +10,8 @@ import Contestant from './subcomponents/Contestant';
 import styles from './Timer.module.scss';
 
 function Timer(): JSX.Element {
-  const masterTl = useAppSelector(selectTimeline);
   const contestants = useAppSelector(selectContestants);
+  const dispatch = useAppDispatch();
   const timer = useRef<HTMLDivElement>(null);
 
   const firstContestant = useRef<HTMLDivElement>(null);
@@ -28,21 +28,6 @@ function Timer(): JSX.Element {
   const secondContestantText = useRef<HTMLDivElement>(null);
   const secondContestantTextBlock = useRef<HTMLDivElement>(null);
 
-  const showTrunkColors = () => {
-    const tl = gsap.timeline({ defaults: { duration: '0.6' } });
-    tl
-      .addLabel('showColors')
-      .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'showColors')
-      .fromTo(firstContestantColor.current, { width: '0', x: '100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
-      .to(firstContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
-      .fromTo(firstContestantColorText.current, { x: '100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1')
-      .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'showColors')
-      .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
-      .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
-      .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1');
-
-    return tl;
-  };
   const blink = () => {
     const tl = gsap.timeline({ defaults: { duration: '0.6' } });
     tl
@@ -57,10 +42,10 @@ function Timer(): JSX.Element {
 
   const showContestants = () => {
     const tl = gsap.timeline({ defaults: { duration: '0.6' } })
-    // move in contestant names
+      // move in contestant names
       .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
       .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '-=0.6')
-    // move in color signs
+      // move in color signs
       .fromTo(firstContestantColorSign.current, { width: '8', x: '-250' }, {
         duration: '0.4',
         ease: 'expo.out',
@@ -75,7 +60,7 @@ function Timer(): JSX.Element {
         x: '0',
       }, '-=0.8')
       .to(secondContestantColorSign.current, { duration: '0.4', width: '8' }, '-=0.4')
-    // meanwhile, show contestants' names
+      // meanwhile, show contestants' names
       .fromTo(firstContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.4')
       .fromTo(firstContestantText.current, { x: '-5%' }, { ease: 'power1.out', duration: '0.8', x: '0%' }, '-=0.4')
       .fromTo(secondContestantText.current, { autoAlpha: '0' }, { duration: '0.1', autoAlpha: '1' }, '-=0.8')
@@ -101,39 +86,69 @@ function Timer(): JSX.Element {
 
     return tl;
   };
+
+  const showTrunkColors = () => {
+    const tl = gsap.timeline({ defaults: { duration: '0.6' } });
+    tl
+      .addLabel('showColors')
+      .to(firstContestantColorSign.current, { duration: '0.2', width: '158', x: '150' }, 'showColors')
+      .fromTo(firstContestantColor.current, { width: '0', x: '100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
+      .to(firstContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
+      .fromTo(firstContestantColorText.current, { x: '100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1')
+      .to(secondContestantColorSign.current, { duration: '0.2', width: '158', x: '-150' }, 'showColors')
+      .fromTo(secondContestantColor.current, { width: '0', x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', width: '150' }, 'showColors+=0.4')
+      .to(secondContestantColor.current, { duration: '0.4', x: '0' }, 'showColors+=0.8')
+      .fromTo(secondContestantColorText.current, { x: '-100%' }, { duration: '0.4', ease: 'power1.inOut', x: '0' }, 'showColors+=1');
+
+    return tl;
+  };
+
   useEffect(() => {
-    masterTl
+    const master = gsap.timeline({
+      defaults: { duration: 0.6 },
+      id: 'master',
+      // paused: true,
+    });
+
+    const showTrunkInfo = gsap.getById('showTrunkInfo');
+    const showBoutInfo = gsap.getById('showBoutInfo');
+
+    master
       .add(showContestants(), 'showContestants')
       .add(blink(), 'blink+=0.5')
       .add(showTrunkColors(), 'showTrunkColors')
-      .add(hideTrunkColors(), 'hideTrunkColors+=2');
-    console.log(masterTl);
-  }, [timer]);
+      .add(showTrunkInfo, '<+1')
+      .add(hideTrunkColors(), 'hideTrunkColors-=0.4')
+      .add(showBoutInfo);
+  }, []);
 
   return (
-    <div className={styles.timer} ref={timer}>
-      <Clock />
-      {contestants.map(
-        ({
-          color, id, lastName, rank,
-        }, index) => (
-          <Contestant
-            color={color}
-            id={id}
-            key={id}
-            lastName={lastName}
-            isSecond={index > 0}
-            rank={rank}
-            refContestant={index > 0 ? secondContestant : firstContestant}
-            refColor={index > 0 ? secondContestantColor : firstContestantColor}
-            refColorSign={index > 0 ? secondContestantColorSign : firstContestantColorSign}
-            refColorText={index > 0 ? secondContestantColorText : firstContestantColorText}
-            refText={index > 0 ? secondContestantText : firstContestantText}
-            refTextBlock={index > 0 ? secondContestantTextBlock : firstContestantTextBlock}
-          />
-        ),
-      )}
-    </div>
+    <>
+      <div className={styles.timer} ref={timer}>
+        <Clock />
+        {contestants.map(
+          ({
+            color, id, lastName, rank,
+          }, index) => (
+            <Contestant
+              color={color}
+              id={id}
+              key={id}
+              lastName={lastName}
+              isSecond={index > 0}
+              rank={rank}
+              refContestant={index > 0 ? secondContestant : firstContestant}
+              refColor={index > 0 ? secondContestantColor : firstContestantColor}
+              refColorSign={index > 0 ? secondContestantColorSign : firstContestantColorSign}
+              refColorText={index > 0 ? secondContestantColorText : firstContestantColorText}
+              refText={index > 0 ? secondContestantText : firstContestantText}
+              refTextBlock={index > 0 ? secondContestantTextBlock : firstContestantTextBlock}
+            />
+          ),
+        )}
+
+      </div>
+    </>
   );
 }
 
