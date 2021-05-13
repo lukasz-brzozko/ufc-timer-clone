@@ -1,6 +1,9 @@
+@use '../../scss/colors.scss';
+@use '../../scss/typography.scss';
 @use '../../scss/variables.scss';
 
 .timer {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
