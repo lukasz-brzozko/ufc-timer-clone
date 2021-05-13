@@ -7,7 +7,7 @@ export type ContestantType = {
   color: string;
   id: number;
   lastName: string;
-  rank: 'C' | number | null
+  rank: 'C' | number | null;
 };
 
 export type ContestantsTuple = [ContestantType, ContestantType];
@@ -21,14 +21,14 @@ const initialState: TimerState = {
     {
       color: 'red',
       id: 1,
-      lastName: 'Contestant 1',
+      lastName: 'Nurmagomedov',
       rank: 1,
     },
     {
       color: 'blue',
       id: 2,
-      lastName: 'Contestant 2',
-      rank: 2,
+      lastName: 'McGregor',
+      rank: 13,
     },
   ],
 };
