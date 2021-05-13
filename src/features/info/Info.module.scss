@@ -5,7 +5,9 @@
   color: colors.$white-pure;
   font-size: 1.1em;
   font-family: typography.$timer-font-family;
+  line-height: 30px;
   letter-spacing: 1px;
+  white-space: nowrap;
   text-transform: uppercase;
 
   &Box {
@@ -13,12 +15,17 @@
     bottom: 100%;
     left: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     width: 100%;
+    min-width: 100%;
+    max-width: 130%;
     height: 30px;
     margin-bottom: 0.25em;
+    padding: 0 1.25em;
+    overflow: hidden;
     background-image: linear-gradient(0deg, colors.$black-pure 0%, colors.$clock-darker 100%);
     transform: translateX(-50%);
+    transform-origin: center 100%;
   }
 }
