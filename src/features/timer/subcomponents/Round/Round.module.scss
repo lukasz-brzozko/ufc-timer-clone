@@ -8,8 +8,20 @@
   &Active {
     width: 200%;
     background-color: transparent;
-    background-image: linear-gradient(to right, #fff 50%, colors.$clock-darker 50%, colors.$clock-darker 100%);
+    background-image: linear-gradient(to right, colors.$white-pure 50%, colors.$clock-darker 50%, colors.$clock-darker 100%);
     transform: translateX(-25%);
+
+    // to migrate to GSAP
+    animation: move-round-bar 300s linear both;
+  }
+
+  &Container {
+    position: absolute;
+    bottom: -20%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   &Wrapper {
@@ -29,5 +41,16 @@
 
   &Complete {
     background-color: colors.$white-pure;
+  }
+}
+
+// to migrate to GSAP
+@keyframes move-round-bar {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
   }
 }
