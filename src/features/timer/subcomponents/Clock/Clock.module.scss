@@ -1,14 +1,18 @@
 @use '../../../../scss/colors.scss';
 @use '../../../../scss/typography.scss';
+@use '../../../../scss/variables.scss';
 
 .clock {
   position: relative;
   z-index: 1;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
+  width: variables.$clock-width;
   height: 100%;
   padding: 0 1.5em;
   background-image: linear-gradient(180deg, colors.$clock-lighter 0%, colors.$clock-darker 100%);
+  transform-origin: center 0%;
 }
 
 .time {
@@ -23,14 +27,4 @@
 
 .separator {
   transform: translateY(-5%);
-}
-
-.ufcLogo {
-  width: 4.3em;
-  transition: fill 0.3s ease;
-  fill: colors.$white-text;
-
-  &:hover {
-    fill: darken($color: colors.$white-text, $amount: 10%);
-  }
 }
