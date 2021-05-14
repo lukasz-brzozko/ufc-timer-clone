@@ -1,0 +1,21 @@
+@use '../../../../scss/colors.scss';
+
+.ufcLogo {
+  width: 4.3em;
+  height: 100%;
+  transition: fill 0.3s ease;
+  fill: colors.$white-text;
+
+  &:hover {
+    fill: darken($color: colors.$white-text, $amount: 10%);
+  }
+
+  &Wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}
