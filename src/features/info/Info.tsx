@@ -1,14 +1,17 @@
 import gsap from 'gsap';
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectMessage, setMessage } from './infoSlice';
-import BOUTS from '../../constants/Bouts';
+import {
+  InfoType, selectMessage, setMessage,
+} from './infoSlice';
+import BOUTS from '../../constants/bouts';
+import INFOTEXT from '../../constants/infoText';
 import styles from './Info.module.scss';
 
 interface CustomTimelineParams {
   id: string;
   duration: number;
-  text: BOUTS | 'Trunk color'
+  text: InfoType
 }
 
 function Info(): JSX.Element {
@@ -47,13 +50,13 @@ function Info(): JSX.Element {
   }, [refInfoBox, refInfoText]);
 
   const showTrunkInfo = useCallback((duration: number) => {
-    const tl = createTl({ duration, id: 'showTrunkInfo', text: 'Trunk color' });
+    const tl = createTl({ duration, id: 'showTrunkInfo', text: INFOTEXT.TRUNK_COLOR });
 
     return tl;
   }, [refInfoBox, refInfoText]);
 
   const showBoutInfo = useCallback((duration: number) => {
-    const tl = createTl({ duration, id: 'showBoutInfo', text: BOUTS.MIDDLEWEIGHT });
+    const tl = createTl({ duration, id: 'showBoutInfo', text: BOUTS.LIGHTWEIGHT });
 
     return tl;
   }, [refInfoBox, refInfoText]);
