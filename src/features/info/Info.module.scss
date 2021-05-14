@@ -24,7 +24,7 @@
     margin-bottom: 0.25em;
     padding: 0 1.25em;
     overflow: hidden;
-    background-image: linear-gradient(0deg, colors.$black-pure 0%, colors.$clock-darker 100%);
+    background-image: linear-gradient(0deg, colors.$black-pure 0%, colors.$clock-lighter 100%);
     transform: translateX(-50%);
     transform-origin: center 100%;
   }
