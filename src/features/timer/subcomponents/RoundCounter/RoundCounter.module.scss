@@ -1,0 +1,26 @@
+@use '../../../../scss/colors.scss';
+@use '../../../../scss/typography.scss';
+
+.round {
+  &CounterWrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  &Number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: colors.$white-pure;
+    font-size: 1.5em;
+    font-family: typography.$timer-font-family;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    transform: translate(-50%, -200%);
+  }
+}
