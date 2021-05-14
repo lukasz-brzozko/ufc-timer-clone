@@ -110,10 +110,16 @@ function Timer(): JSX.Element {
       // paused: true,
     });
 
-    const showTrunkInfo = gsap.getById('showTrunkInfo');
     const showBoutInfo = gsap.getById('showBoutInfo');
+    const showClock = gsap.getById('showClock');
+    const showCurrentRound = gsap.getById('showCurrentRound');
+    const showLogo = gsap.getById('showLogo');
+    const showTrunkInfo = gsap.getById('showTrunkInfo');
 
     master
+      .add(showClock)
+      .add(showCurrentRound)
+      .add(showLogo)
       .add(showContestants(), 'showContestants')
       .add(blink(), 'blink+=0.5')
       .add(showTrunkColors(), 'showTrunkColors')
