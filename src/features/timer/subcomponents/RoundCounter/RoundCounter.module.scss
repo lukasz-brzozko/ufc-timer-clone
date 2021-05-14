@@ -2,25 +2,30 @@
 @use '../../../../scss/typography.scss';
 
 .round {
-  &CounterWrapper {
+  &CounterWrapper,
+  &Number {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+  }
+
+  &CounterWrapper {
     overflow: hidden;
   }
 
   &Number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: colors.$white-pure;
-    font-size: 1.5em;
+    font-size: 1.6em;
     font-family: typography.$timer-font-family;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     white-space: nowrap;
     text-transform: uppercase;
-    transform: translate(-50%, -200%);
+    word-spacing: -0.25em;
+    transform: translateY(-100%);
   }
 }
