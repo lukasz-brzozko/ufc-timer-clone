@@ -43,7 +43,7 @@ function Timer(): JSX.Element {
   const showContestants = () => {
     const tl = gsap.timeline({ defaults: { duration: '0.6' } })
       // move in contestant names
-      .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '1')
+      .fromTo(firstContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' })
       .fromTo(secondContestantTextBlock.current, { padding: '0', width: '0' }, { padding: '0 1.5em', width: '250' }, '-=0.6')
       // move in color signs
       .fromTo(firstContestantColorSign.current, { width: '8', x: '-250' }, {
@@ -110,17 +110,23 @@ function Timer(): JSX.Element {
       // paused: true,
     });
 
+    const hideLogoWrapperBackground = gsap.getById('hideLogoWrapperBackground');
     const showBoutInfo = gsap.getById('showBoutInfo');
+    const showCountdown = gsap.getById('showCountdown');
     const showClock = gsap.getById('showClock');
     const showCurrentRound = gsap.getById('showCurrentRound');
     const showLogo = gsap.getById('showLogo');
+    const showLogoWrapperBackground = gsap.getById('showLogoWrapperBackground');
     const showTrunkInfo = gsap.getById('showTrunkInfo');
 
     master
       .add(showClock)
-      .add(showCurrentRound)
-      .add(showLogo)
-      .add(showContestants(), 'showContestants')
+      .add(showCurrentRound, 'showCurrentRound')
+      .add(hideLogoWrapperBackground, '<-0.1')
+      .add(showLogo, 'showCurrentRound+=1.8')
+      .add(showContestants(), '<')
+      .add(showLogoWrapperBackground, '<')
+      .add(showCountdown, '>-0.5')
       .add(blink(), 'blink+=0.5')
       .add(showTrunkColors(), 'showTrunkColors')
       .add(showTrunkInfo, '<+1')
@@ -152,7 +158,6 @@ function Timer(): JSX.Element {
             />
           ),
         )}
-
       </div>
     </>
   );
