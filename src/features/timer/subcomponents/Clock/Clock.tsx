@@ -1,5 +1,5 @@
 import {
-  RefObject, useCallback, useEffect, useRef,
+  useCallback, useEffect, useRef,
 } from 'react';
 import gsap from 'gsap';
 import Countdown, { zeroPad } from 'react-countdown';
@@ -16,7 +16,8 @@ interface RendererProps {
 }
 
 function Clock(): JSX.Element {
-  const refClock = useRef(null);
+  const refClock = useRef<HTMLDivElement>(null);
+  const refCountdown = useRef<HTMLSpanElement>(null);
 
   const showClock = useCallback(
     () => {
@@ -35,10 +36,26 @@ function Clock(): JSX.Element {
     [refClock],
   );
 
+  const showCountdown = useCallback(
+    () => {
+      const tl = gsap.timeline({
+        defaults: {
+          duration: '0.4',
+          ease: 'power1.inOut',
+        },
+        id: 'showCountdown',
+      });
+      tl
+        .fromTo(refCountdown.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: '0.1' })
+        .fromTo(refCountdown.current, { x: '-65%' }, { x: '0' });
+    },
+    [refCountdown],
+  );
+
   const renderer = useCallback(
     (props: RendererProps) => (
       <>
-        <span className={styles.time}>
+        <span className={styles.time} ref={refCountdown}>
           <span className={styles.minutes}>{zeroPad(props.minutes, 1)}</span>
           <span className={styles.separator}>:</span>
           <span className={styles.seconds}>{zeroPad(props.seconds, 2)}</span>
@@ -50,16 +67,19 @@ function Clock(): JSX.Element {
 
   useEffect(() => {
     showClock();
+    showCountdown();
   }, [refClock]);
 
   return (
     <div className={styles.clock} ref={refClock}>
       <Info />
-      <Logo />
-      {/* <Countdown
-        date={Date.now() + 5 * 60 * 1000}
-        renderer={renderer}
-      /> */}
+      <div className={styles.clockWrapper}>
+        <Logo />
+        <Countdown
+          date={Date.now() + 5 * 60 * 1000}
+          renderer={renderer}
+        />
+      </div>
       <RoundCounter />
     </div>
   );
