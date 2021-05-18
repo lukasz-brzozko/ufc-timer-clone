@@ -6,7 +6,7 @@ import Countdown, { zeroPad } from 'react-countdown';
 
 import Info from '../../../info/Info';
 import Logo from '../Logo';
-import RoundCounter from '../RoundCounter';
+import RoundCounter from '../../../roundCounter';
 
 import styles from './Clock.module.scss';
 
