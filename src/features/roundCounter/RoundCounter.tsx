@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import Round from '../Round';
+import { useCallback, useEffect, useRef } from 'react';
+
+import { selectRoundsCounter } from './roundCounterSlice';
+import { useAppSelector } from '../../app/hooks';
+import Round from '../timer/subcomponents/Round';
 
 import styles from './RoundCounter.module.scss';
 
 function RoundCounter(): JSX.Element {
+  const { activeRound, rounds } = useAppSelector(selectRoundsCounter);
+  const activeRoundLabel = `Round ${activeRound > rounds ? rounds : activeRound}`;
   const refRoundNumber = useRef<HTMLSpanElement>(null);
 
   const showCurrentRound = useCallback(
@@ -34,7 +39,9 @@ function RoundCounter(): JSX.Element {
   return (
     <>
       <div className={styles.roundCounterWrapper}>
-        <span className={styles.roundNumber} ref={refRoundNumber}>Round 1</span>
+        <span className={styles.roundNumber} ref={refRoundNumber}>
+          {activeRoundLabel}
+        </span>
       </div>
       <Round />
     </>
