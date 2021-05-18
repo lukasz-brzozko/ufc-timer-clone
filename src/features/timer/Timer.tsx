@@ -140,9 +140,10 @@ function Timer(): JSX.Element {
         <Clock />
         {contestants.map(
           ({
-            color, id, lastName, rank,
+            champion, color, id, lastName, rank,
           }, index) => (
             <Contestant
+              champion={champion}
               color={color}
               id={id}
               key={id}

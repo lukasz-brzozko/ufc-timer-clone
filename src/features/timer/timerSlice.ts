@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
 export type ContestantType = {
+  champion: boolean;
   color: string;
   id: number;
   lastName: string;
@@ -19,12 +20,14 @@ export interface TimerState {
 const initialState: TimerState = {
   contestants: [
     {
-      color: 'red',
+      champion: true,
+      color: 'gold',
       id: 1,
       lastName: 'Nurmagomedov',
-      rank: 1,
+      rank: 'C',
     },
     {
+      champion: false,
       color: 'blue',
       id: 2,
       lastName: 'McGregor',
