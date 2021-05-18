@@ -117,10 +117,12 @@ function Timer(): JSX.Element {
     const showCurrentRound = gsap.getById('showCurrentRound');
     const showLogo = gsap.getById('showLogo');
     const showLogoWrapperBackground = gsap.getById('showLogoWrapperBackground');
+    const showRounds = gsap.getById('showRounds');
     const showTrunkInfo = gsap.getById('showTrunkInfo');
 
     master
       .add(showClock)
+      .add(showRounds, '<+0.5')
       .add(showCurrentRound, 'showCurrentRound')
       .add(hideLogoWrapperBackground, '<-0.1')
       .add(showLogo, 'showCurrentRound+=1.8')
