@@ -123,9 +123,9 @@ function Timer(): JSX.Element {
     master
       .add(showClock)
       .add(showRounds, '<+0.5')
-      .add(showCurrentRound, 'showCurrentRound')
+      .add(showCurrentRound, 'showCurrentRound-=1.2')
       .add(hideLogoWrapperBackground, '<-0.1')
-      .add(showLogo, 'showCurrentRound+=1.8')
+      .add(showLogo, 'showCurrentRound+=0.55')
       .add(showContestants(), '<')
       .add(showLogoWrapperBackground, '<')
       .add(showCountdown, '>-0.5')
