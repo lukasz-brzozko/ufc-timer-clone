@@ -3,15 +3,12 @@
 .round {
   display: block;
   height: 100%;
-  background-color: colors.$clock-darker;
+  background-image: linear-gradient(180deg, colors.$clock-lighter 0%, colors.$clock-darker 100%);
 
   &Active {
-    width: 200%;
+    width: 201%;
     background-color: transparent;
-    background-image: linear-gradient(to right, colors.$white-pure 50%, colors.$clock-darker 50%, colors.$clock-darker 100%);
-    transform: translateX(-25%);
-
-    // to migrate to GSAP
+    // background-image: linear-gradient(to right, colors.$white-pure 50%, colors.$clock-darker 50%, colors.$clock-darker 100%);
     animation: move-round-bar 300s linear both;
   }
 
@@ -45,7 +42,6 @@
   }
 }
 
-// to migrate to GSAP
 @keyframes move-round-bar {
   from {
     transform: translateX(-50%);

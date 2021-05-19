@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { useCallback, useEffect, useRef } from 'react';
 
+import { readFile } from 'node:fs';
 import { selectActiveRound, selectRoundsCounter } from '../../../roundCounter/roundCounterSlice';
 import { useAppSelector } from '../../../../app/hooks';
 
@@ -13,8 +14,11 @@ function Round(): JSX.Element {
   const refRoundContainer = useRef<HTMLDivElement>(null);
 
   const showRounds = useCallback(() => {
-    const roundsWrapperEl = refRoundContainer.current?.getElementsByClassName(styles.roundWrapper);
-    const roundsEl = refRoundContainer.current?.getElementsByClassName(styles.round);
+    const { current: roundContainerEl } = refRoundContainer;
+    const roundsWrapperEl = roundContainerEl?.getElementsByClassName(styles.roundWrapper);
+    const roundsEl = roundContainerEl?.getElementsByClassName(styles.round);
+    const activeRoundEl = roundContainerEl?.getElementsByClassName(styles.roundActive);
+    const completedRounds = roundContainerEl?.getElementsByClassName(styles.roundComplete) ?? [];
 
     const tl = gsap.timeline({
       defaults: {
@@ -24,21 +28,26 @@ function Round(): JSX.Element {
       id: 'showRounds',
     });
 
-    if (roundsWrapperEl !== undefined && roundsEl !== undefined) {
+    if (roundsWrapperEl !== undefined && roundsEl !== undefined && activeRoundEl !== undefined) {
       tl
-        .set(refRoundContainer.current, {
+        .set(roundContainerEl, {
           bottom: '100%', y: '100%', height: '120%', rotateX: '90deg', transformOrigin: 'center 0',
         })
-        .fromTo(refRoundContainer.current, { backgroundImage: 'inherit', filter: 'blur(0px)' }, { backgroundImage: 'none', filter: 'blur(0px)' })
-        .fromTo(roundsEl, { backgroundColor: 'transparent', backgroundImage: 'inherit' }, { backgroundImage: 'linear-gradient(180deg, #363636 0%, #2b2b2b 100%)' }, '<')
-        .to(refRoundContainer.current, { rotateX: '0deg' }, '<')
-        .fromTo(refRoundContainer.current, { autoAlpha: 0 }, { autoAlpha: 1 }, '<')
-        .to(refRoundContainer.current, { bottom: '-20%', y: '0%' }, '<')
-        .to(refRoundContainer.current, { height: '5' }, '-=0.2')
+        .fromTo(roundContainerEl, { filter: 'blur(0px)' }, { filter: 'blur(0px)' })
+        .to(roundContainerEl, { rotateX: '0deg' }, '<')
+        .fromTo(roundContainerEl, { autoAlpha: 0 }, { autoAlpha: 1 }, '<')
+        .to(roundContainerEl, { bottom: '-20%', y: '0%' }, '<')
+        .to(roundContainerEl, { height: '5' }, '-=0.2')
         .fromTo(roundsWrapperEl, { height: '100%' }, { height: '5' }, '<')
-        .to(`.${styles.roundComplete}`, { backgroundColor: '#fff', backgroundImage: 'linear-gradient(transparent 0%, transparent 100%)' });
+        .fromTo(completedRounds, { backgroundColor: 'transparent' }, { backgroundColor: '#fff', backgroundImage: 'linear-gradient(transparent 0%, transparent 100%)' })
+        .to(activeRoundEl, { backgroundImage: 'linear-gradient(to right, #fff 50%, #2b2b2b 50%, #2b2b2b 100%)' }, '<')
+        .set(activeRoundEl, { duration: 0.15, ease: 'none' })
+        .to(activeRoundEl, { autoAlpha: 0, duration: 0.15 }, '<')
+        .to(activeRoundEl, { autoAlpha: 1, duration: 0.15 })
+        .to(activeRoundEl, { autoAlpha: 0, duration: 0.15 })
+        .to(activeRoundEl, { autoAlpha: 1, duration: 0.15 });
     }
-  }, []);
+  }, [refRoundContainer]);
 
   useEffect(() => {
     showRounds();
