@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ContestantType } from '../../timerSlice';
+import { ContestantType } from '../../features/timer/timerSlice';
 
 import styles from './Contestant.module.scss';
 

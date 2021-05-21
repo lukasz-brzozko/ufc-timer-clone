@@ -4,9 +4,9 @@ import {
 import gsap from 'gsap';
 import Countdown, { zeroPad } from 'react-countdown';
 
-import Info from '../../../info/Info';
-import Logo from '../Logo';
-import RoundCounter from '../../../roundCounter';
+import Info from '../info/Info';
+import Logo from '../../components/Logo';
+import RoundCounter from '../roundCounter';
 
 import styles from './Clock.module.scss';
 

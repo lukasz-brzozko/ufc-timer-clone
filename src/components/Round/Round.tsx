@@ -2,8 +2,8 @@ import gsap from 'gsap';
 import { useCallback, useEffect, useRef } from 'react';
 
 import { readFile } from 'node:fs';
-import { selectActiveRound, selectRoundsCounter } from '../../../roundCounter/roundCounterSlice';
-import { useAppSelector } from '../../../../app/hooks';
+import { selectActiveRound, selectRoundsCounter } from '../../features/roundCounter/roundCounterSlice';
+import { useAppSelector } from '../../app/hooks';
 
 import styles from './Round.module.scss';
 

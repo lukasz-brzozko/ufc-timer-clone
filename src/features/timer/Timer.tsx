@@ -4,8 +4,8 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectContestants, update } from './timerSlice';
 import { setMessage } from '../info/infoSlice';
 
-import Clock from './subcomponents/Clock';
-import Contestant from './subcomponents/Contestant';
+import Clock from '../clock';
+import Contestant from '../../components/Contestant';
 
 import styles from './Timer.module.scss';
 

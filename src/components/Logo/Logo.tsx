@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ReactComponent as UFCLogo } from '../../../../assets/ufc-logo.svg';
+import { ReactComponent as UFCLogo } from '../../assets/ufc-logo.svg';
 
 import styles from './Logo.module.scss';
 

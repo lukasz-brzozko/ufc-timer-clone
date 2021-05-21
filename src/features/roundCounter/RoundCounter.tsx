@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { selectRoundsCounter } from './roundCounterSlice';
 import { useAppSelector } from '../../app/hooks';
-import Round from '../timer/subcomponents/Round';
+import Round from '../../components/Round';
 
 import styles from './RoundCounter.module.scss';
 
