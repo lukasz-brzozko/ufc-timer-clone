@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DatGui, {
-  DatBoolean, DatColor, DatFolder, DatNumber, DatSelect, DatString,
+  DatBoolean, DatFolder, DatNumber, DatSelect, DatString,
 } from 'react-dat-gui';
-import { CirclePicker, CirclePickerProps } from 'react-color';
+import { CirclePicker, ColorResult } from 'react-color';
+import COLORS from '../../constants/colors';
 
 import 'react-dat-gui/dist/index.css';
 import styles from './GUI.module.scss';
@@ -14,10 +15,30 @@ function GUI(): JSX.Element {
     color,
   };
 
+  const colors = COLORS.map((colorElement) => colorElement.code);
+  const cardStyles: React.CSSProperties = {
+    backgroundColor: '#fff2',
+    justifyContent: 'space-evenly',
+    margin: 0,
+    marginLeft: '-4px',
+    padding: '10px',
+    paddingLeft: 'auto',
+    paddingRight: 'auto',
+  };
+
   const handleUpdate = ({ color: chosenColor }: { color: string }) => {
     console.log(chosenColor);
     setColor(chosenColor);
   };
+
+  const handleSwatchHover = (targetColor: ColorResult, event: MouseEvent) => {
+    const target = COLORS.find((colorEl) => colorEl.code === targetColor.hex);
+    if (target !== undefined) {
+      const targetElement = event.target as HTMLDivElement;
+      if (targetElement.title !== target.name) targetElement.title = target.name;
+    }
+  };
+
   return (
     <DatGui data={data} onUpdate={handleUpdate} className={styles.gui} labelWidth="50%">
       <DatFolder title="Contender 1" closed={false}>
@@ -26,29 +47,21 @@ function GUI(): JSX.Element {
         <DatNumber label="Rank" path="rank" min={15} max={15} step={1} />
         <DatFolder title="Trunk Color" closed>
           <CirclePicker
+            onSwatchHover={handleSwatchHover}
+            colors={colors}
             className={styles.circlePicker}
             circleSpacing={10}
             circleSize={25}
             styles={{
               default: {
-                card: {
-                  justifyContent: 'space-evenly', padding: '10px', paddingLeft: 'auto', paddingRight: 'auto', margin: 0, marginLeft: '-4px', backgroundColor: '#fff2',
-                },
+                card: cardStyles,
               },
             }}
-            colors={['#131416',
-              '#294790',
-              '#b5a772',
-              '#207744',
-              '#8f020e',
-              '#f8f6f9',
-              '#e6d450']}
             width="104%"
           />
         </DatFolder>
       </DatFolder>
       <DatFolder title="Fight options" closed={false}>
-
         <DatSelect label="Round time (minutes)" path="roundTime" options={[1, 2, 3, 4, 5]} />
         <DatSelect label="Rounds" path="rounds" options={[1, 2, 3, 4, 5]} />
         <DatNumber label="Actual Round" path="actualRound" min={1} max={5} step={1} />
