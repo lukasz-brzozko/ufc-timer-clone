@@ -13,7 +13,7 @@ import COLORS from '../../constants/colors';
 import { selectClockTime } from '../../features/clock/clockSlice';
 import { selectMessage } from '../../features/info/infoSlice';
 import { selectActiveRound, selectRoundsCount } from '../../features/roundCounter/roundCounterSlice';
-import { ContestantType, selectContestants } from '../../features/timer/timerSlice';
+import { ContestantType, selectContestants, updateContestants } from '../../features/timer/timerSlice';
 
 import 'react-dat-gui/dist/index.css';
 import styles from './GUI.module.scss';
@@ -64,7 +64,7 @@ function GUI(): JSX.Element {
       <DatFolder
         closed={false}
         key={id}
-        title={`Contender ${id}`}
+        title={`Contender ${index + 1}`}
       >
         <DatString label="Name" path={`timer.contestants[${index}].lastName`} />
         <DatBoolean label="Champion" path={`timer.contestants[${index}].champion`} />
@@ -90,12 +90,20 @@ function GUI(): JSX.Element {
 
   const handleUpdate = (newData: RootState) => {
     const diffs = updatedDiff(data, newData);
-    console.log(newData);
     console.log(diffs);
+    const [changedProperty] = Object.keys(diffs);
+    switch (changedProperty) {
+      case 'timer':
+        dispatch(updateContestants(newData.timer.contestants));
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
-    <DatGui className={styles.gui} data={data} labelWidth="50%" liveUpdate={false} onUpdate={handleUpdate}>
+    <DatGui className={styles.gui} data={data} labelWidth="50%" onUpdate={handleUpdate} style={{ zIndex: 100 }}>
       {contestants.map(generateContestantsFolders)}
 
       <DatFolder title="Fight options" closed={false}>
