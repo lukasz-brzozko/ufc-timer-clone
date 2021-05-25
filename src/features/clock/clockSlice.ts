@@ -15,12 +15,14 @@ export const clockSlice = createSlice({
   name: 'clock',
   initialState,
   reducers: {
-
+    setClockTime: (state, action: PayloadAction<number>) => {
+      state.minutes = action.payload;
+    },
   },
 });
 
 export const selectClockTime = (state: RootState): number => state.clock.minutes;
 
-// export const { setClockTime } = clockSlice.actions;
+export const { setClockTime } = clockSlice.actions;
 
 export default clockSlice.reducer;
