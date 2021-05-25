@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
-import { ContestantType } from '../../features/timer/timerSlice';
+import { useAppSelector } from '../../app/hooks';
+import { ContestantType, selectContestants } from '../../features/timer/timerSlice';
 
 import styles from './Contestant.module.scss';
 
@@ -17,13 +16,11 @@ type ContestantRefs = {
   refTextBlock: React.RefObject<HTMLDivElement>
 };
 
-type ContestantProps = ContestantModifier & ContestantRefs & ContestantType;
+type ContestantProps = ContestantModifier & ContestantRefs & Pick<ContestantType, 'id'>;
 
 function Contestant({
-  color,
+  id,
   isSecond,
-  lastName,
-  rank,
   refContestant,
   refColor,
   refColorSign,
@@ -31,22 +28,27 @@ function Contestant({
   refText,
   refTextBlock,
 }: ContestantProps): JSX.Element {
-  const [name, setName] = useState(lastName);
-  const [ranking, setRanking] = useState(rank);
-  const [actualColor, setActualColor] = useState(color);
+  const contestants = useAppSelector(selectContestants);
+  const properContestant = contestants.find((contestant) => contestant.id === id);
+
+  const {
+    champion, color, lastName, rank,
+  } = properContestant as ContestantType;
+
   const modifierClass = isSecond ? ` ${styles.colorSignSecond}` : '';
+  const ranking = champion ? 'C' : rank;
 
   return (
     <div className={styles.contestant} ref={refContestant}>
       <div className={styles.container} ref={refTextBlock}>
         <div className={styles.textWrapper} ref={refText}>
           <span className={styles.rank}>{ranking}</span>
-          <span className={styles.name}>{name}</span>
+          <span className={styles.name}>{lastName}</span>
         </div>
         <span className={`${styles.colorSign}${modifierClass}`} ref={refColorSign} />
       </div>
       <div className={styles.color} ref={refColor}>
-        <span className={styles.colorText} ref={refColorText}>{actualColor}</span>
+        <span className={styles.colorText} ref={refColorText}>{color}</span>
       </div>
     </div>
   );

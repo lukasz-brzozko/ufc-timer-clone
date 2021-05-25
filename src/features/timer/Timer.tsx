@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectContestants, update } from './timerSlice';
+import { selectContestants } from './timerSlice';
 import { setMessage } from '../info/infoSlice';
 
 import Clock from '../clock';
@@ -141,17 +141,11 @@ function Timer(): JSX.Element {
       <div className={styles.timer} ref={timer}>
         <Clock />
         {contestants.map(
-          ({
-            champion, color, id, lastName, rank,
-          }, index) => (
+          ({ id }, index) => (
             <Contestant
-              champion={champion}
-              color={color}
               id={id}
               key={id}
-              lastName={lastName}
               isSecond={index > 0}
-              rank={rank}
               refContestant={index > 0 ? secondContestant : firstContestant}
               refColor={index > 0 ? secondContestantColor : firstContestantColor}
               refColorSign={index > 0 ? secondContestantColorSign : firstContestantColorSign}
