@@ -1,12 +1,9 @@
-import { useState } from 'react';
+import { updatedDiff } from 'deep-object-diff';
 import { CirclePicker, ColorResult } from 'react-color';
 import DatGui, {
   DatBoolean, DatFolder, DatNumber, DatSelect, DatString,
 } from 'react-dat-gui';
-import {
-  diff, updatedDiff,
-} from 'deep-object-diff';
-import { constants } from 'node:os';
+
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/store';
 import COLORS from '../../constants/colors';
@@ -32,8 +29,6 @@ function GUI(): JSX.Element {
     roundCounter: { activeRound, rounds: roundsCount },
     timer: { contestants },
   };
-
-  const [color, setColor] = useState('#2FA1D6');
 
   const colors = COLORS.map((colorElement) => colorElement.code);
   const cardStyles: React.CSSProperties = {
