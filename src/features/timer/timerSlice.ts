@@ -12,6 +12,11 @@ export type ContestantType = {
 };
 
 export type ContestantsTuple = [ContestantType, ContestantType];
+
+export type ContestantsColorsPayload = {
+  color: string,
+  targetIndex: number
+};
 export interface TimerState {
   contestants: ContestantsTuple;
 }
@@ -39,6 +44,10 @@ export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
+    setContestantsColors: (state, action: PayloadAction<ContestantsColorsPayload>) => {
+      state.contestants[action.payload.targetIndex].color = action.payload.color;
+    },
+
     updateContestants: (state, action: PayloadAction<ContestantsTuple>) => {
       state.contestants = action.payload;
     },
@@ -48,6 +57,6 @@ export const timerSlice = createSlice({
 
 export const selectContestants = (state: RootState): ContestantsTuple => state.timer.contestants;
 
-export const { updateContestants } = timerSlice.actions;
+export const { setContestantsColors, updateContestants } = timerSlice.actions;
 
 export default timerSlice.reducer;

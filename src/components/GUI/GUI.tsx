@@ -1,26 +1,29 @@
 import { updatedDiff } from 'deep-object-diff';
-import { CirclePicker, ColorResult } from 'react-color';
+import { ColorResult } from 'react-color';
 import DatGui, {
   DatBoolean, DatFolder, DatNumber, DatSelect, DatString,
 } from 'react-dat-gui';
 
-import BOUTS from '../../constants/bouts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/store';
+import BOUTS from '../../constants/bouts';
 import COLORS from '../../constants/colors';
 import { selectClockTime, setClockTime } from '../../features/clock/clockSlice';
+import { selectBout, selectMessage, setBout } from '../../features/info/infoSlice';
 import {
-  selectMessage, selectBout, setBout, setMessage,
-} from '../../features/info/infoSlice';
-import {
-  selectActiveRound, selectRoundsCount, setActiveRound, setRoundCounter, setRoundsCount,
+  selectActiveRound, selectRoundsCount, setRoundCounter,
 } from '../../features/roundCounter/roundCounterSlice';
-import { ContestantType, selectContestants, updateContestants } from '../../features/timer/timerSlice';
+import {
+  ContestantType, selectContestants, setContestantsColors, updateContestants,
+} from '../../features/timer/timerSlice';
+import CustomColorPicker from '../CustomColorPicker';
 
 import 'react-dat-gui/dist/index.css';
 import styles from './GUI.module.scss';
 
 function GUI(): JSX.Element {
+  const TARGET_INDEX_SELECTOR = '[data-index]';
+
   const dispatch = useAppDispatch();
   const bouts = Object.values(BOUTS);
   const activeRound = useAppSelector(selectActiveRound);
@@ -56,6 +59,21 @@ function GUI(): JSX.Element {
     }
   };
 
+  const handleColorChange = (color: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
+    const parentTarget = event.target.closest(TARGET_INDEX_SELECTOR) as HTMLElement;
+    const targetIndex = parentTarget?.dataset.index;
+    if (targetIndex !== undefined) {
+      const parsedTargetIndex = parseInt(targetIndex, 10);
+      const payload = {
+        color: color.hex,
+        targetIndex: parsedTargetIndex,
+      };
+      console.log(payload);
+
+      dispatch(setContestantsColors(payload));
+    }
+  };
+
   const generateContestantsFolders = ({ id }: ContestantType, index: number) => {
     const conditionalRankElement = data.timer.contestants[index].champion === false
       ? <DatNumber label="Rank" path={`timer.contestants[${index}].rank`} min={1} max={15} step={1} />
@@ -71,18 +89,20 @@ function GUI(): JSX.Element {
         <DatBoolean label="Champion" path={`timer.contestants[${index}].champion`} />
         {conditionalRankElement}
         <DatFolder title="Trunk Color" closed>
-          <CirclePicker
+          <CustomColorPicker
             onSwatchHover={handleSwatchHover}
             colors={colors}
             className={styles.circlePicker}
             circleSpacing={10}
             circleSize={25}
+            index={index}
             styles={{
               default: {
                 card: cardStyles,
               },
             }}
             width="104%"
+            onChange={handleColorChange}
           />
         </DatFolder>
       </DatFolder>
