@@ -4,12 +4,17 @@ import DatGui, {
   DatBoolean, DatFolder, DatNumber, DatSelect, DatString,
 } from 'react-dat-gui';
 
+import BOUTS from '../../constants/bouts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/store';
 import COLORS from '../../constants/colors';
-import { selectClockTime } from '../../features/clock/clockSlice';
-import { selectMessage } from '../../features/info/infoSlice';
-import { selectActiveRound, selectRoundsCount } from '../../features/roundCounter/roundCounterSlice';
+import { selectClockTime, setClockTime } from '../../features/clock/clockSlice';
+import {
+  selectMessage, selectBout, setBout, setMessage,
+} from '../../features/info/infoSlice';
+import {
+  selectActiveRound, selectRoundsCount, setActiveRound, setRoundCounter, setRoundsCount,
+} from '../../features/roundCounter/roundCounterSlice';
 import { ContestantType, selectContestants, updateContestants } from '../../features/timer/timerSlice';
 
 import 'react-dat-gui/dist/index.css';
@@ -17,15 +22,17 @@ import styles from './GUI.module.scss';
 
 function GUI(): JSX.Element {
   const dispatch = useAppDispatch();
-  const roundTime = useAppSelector(selectClockTime);
-  const infoMessage = useAppSelector(selectMessage);
+  const bouts = Object.values(BOUTS);
   const activeRound = useAppSelector(selectActiveRound);
-  const roundsCount = useAppSelector(selectRoundsCount);
   const contestants = useAppSelector(selectContestants);
+  const currentBout = useAppSelector(selectBout);
+  const infoMessage = useAppSelector(selectMessage);
+  const roundsCount = useAppSelector(selectRoundsCount);
+  const roundTime = useAppSelector(selectClockTime);
 
   const data: RootState = {
     clock: { minutes: roundTime },
-    info: { message: infoMessage },
+    info: { bout: currentBout, message: infoMessage },
     roundCounter: { activeRound, rounds: roundsCount },
     timer: { contestants },
   };
@@ -55,7 +62,6 @@ function GUI(): JSX.Element {
       : <></>;
 
     return (
-
       <DatFolder
         closed={false}
         key={id}
@@ -91,6 +97,15 @@ function GUI(): JSX.Element {
       case 'timer':
         dispatch(updateContestants(newData.timer.contestants));
         break;
+      case 'clock':
+        dispatch(setClockTime(newData.clock.minutes));
+        break;
+      case 'info':
+        dispatch(setBout(newData.info.bout));
+        break;
+      case 'roundCounter':
+        dispatch(setRoundCounter(newData.roundCounter));
+        break;
 
       default:
         break;
@@ -98,14 +113,14 @@ function GUI(): JSX.Element {
   };
 
   return (
-    <DatGui className={styles.gui} data={data} labelWidth="50%" onUpdate={handleUpdate} style={{ zIndex: 100 }}>
+    <DatGui className={styles.gui} data={data} labelWidth="40%" onUpdate={handleUpdate} style={{ zIndex: 100 }}>
       {contestants.map(generateContestantsFolders)}
 
       <DatFolder title="Fight options" closed={false}>
-        <DatNumber label="Round time (minutes)" path="clock.minutes" min={1} max={5} step={1} />
+        <DatNumber label="Round time (min)" path="clock.minutes" min={1} max={5} step={1} />
         <DatNumber label="Rounds" path="roundCounter.rounds" min={1} max={5} step={1} />
-        <DatNumber label="Actual Round" path="roundCounter.activeRound" min={1} max={5} step={1} />
-        <DatSelect label="Bout" path="info.message" options={['Lightweight', 'Bantamweight']} />
+        <DatNumber label="Actual Round" path="roundCounter.activeRound" min={1} max={roundsCount} step={1} />
+        <DatSelect label="Category" path="info.bout" options={bouts} />
       </DatFolder>
     </DatGui>
   );

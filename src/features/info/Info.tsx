@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  InfoType, selectMessage, setMessage,
+  InfoType, selectBout, selectMessage, setMessage,
 } from './infoSlice';
 import BOUTS from '../../constants/bouts';
 import INFOTEXT from '../../constants/infoText';
@@ -15,10 +15,12 @@ interface CustomTimelineParams {
 }
 
 function Info(): JSX.Element {
-  const infoMessage = useAppSelector(selectMessage);
   const dispatch = useAppDispatch();
+  const currentBout = useAppSelector(selectBout);
+  const infoMessage = useAppSelector(selectMessage);
   const refInfoBox = useRef<HTMLDivElement>(null);
   const refInfoText = useRef<HTMLSpanElement>(null);
+
   const timelineOptions: gsap.TimelineVars = {
     defaults: {
       duration: '0.4',
@@ -56,7 +58,7 @@ function Info(): JSX.Element {
   }, [refInfoBox, refInfoText]);
 
   const showBoutInfo = useCallback((duration: number) => {
-    const tl = createTl({ duration, id: 'showBoutInfo', text: BOUTS.LIGHTWEIGHT });
+    const tl = createTl({ duration, id: 'showBoutInfo', text: currentBout });
 
     return tl;
   }, [refInfoBox, refInfoText]);

@@ -23,16 +23,28 @@ export const roundCounterSlice = createSlice({
   name: 'roundCounter',
   initialState,
   reducers: {
+    setActiveRound: (state, action: PayloadAction<RoundCounterState>) => {
+      state.activeRound = action.payload.activeRound;
+    },
 
+    setRoundsCount: (state, action: PayloadAction<RoundCounterState>) => {
+      state.rounds = action.payload.rounds;
+    },
+
+    setRoundCounter: (state, action: PayloadAction<RoundCounterState>) => {
+      state.activeRound = action.payload.activeRound;
+      state.rounds = action.payload.rounds;
+    },
   },
 });
 
 export const selectRoundsCounter = (state: RootState): RoundCounterState => state.roundCounter;
+export const selectRoundsCount = (state: RootState): Rounds => state.roundCounter.rounds;
 export const selectActiveRound = (state: RootState): ActiveRound => {
   const { activeRound, rounds } = state.roundCounter;
   return activeRound > rounds ? rounds : activeRound;
 };
 
-// export const { update } = roundCounterSlice.actions;
+export const { setActiveRound, setRoundsCount, setRoundCounter } = roundCounterSlice.actions;
 
 export default roundCounterSlice.reducer;
