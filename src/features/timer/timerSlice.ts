@@ -2,10 +2,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../../app/store';
+import COLORS, { Color } from '../../constants/colors';
 
 export type ContestantType = {
   champion: boolean;
-  color: string;
+  color: Color;
   id: number;
   lastName: string;
   rank: number
@@ -25,14 +26,14 @@ const initialState: TimerState = {
   contestants: [
     {
       champion: true,
-      color: 'gold',
+      color: COLORS.BLACK,
       id: 1,
       lastName: 'Nurmagomedov',
       rank: 1,
     },
     {
       champion: false,
-      color: 'blue',
+      color: COLORS.GREEN,
       id: 2,
       lastName: 'McGregor',
       rank: 13,
@@ -45,7 +46,11 @@ export const timerSlice = createSlice({
   initialState,
   reducers: {
     setContestantsColors: (state, action: PayloadAction<ContestantsColorsPayload>) => {
-      state.contestants[action.payload.targetIndex].color = action.payload.color;
+      const colorEntries = Object.values(COLORS);
+      const chosenColor = colorEntries.find((color) => color.code === action.payload.color);
+      if (chosenColor !== undefined) {
+        state.contestants[action.payload.targetIndex].color = chosenColor;
+      }
     },
 
     updateContestants: (state, action: PayloadAction<ContestantsTuple>) => {

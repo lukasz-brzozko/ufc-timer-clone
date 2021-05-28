@@ -40,7 +40,8 @@ function GUI(): JSX.Element {
     timer: { contestants },
   };
 
-  const colors = COLORS.map((colorElement) => colorElement.code);
+  const colorEntries = Object.values(COLORS);
+  const colors = colorEntries.map((colorElement) => colorElement.code);
   const cardStyles: React.CSSProperties = {
     backgroundColor: '#fff2',
     justifyContent: 'space-evenly',
@@ -52,7 +53,7 @@ function GUI(): JSX.Element {
   };
 
   const handleSwatchHover = (targetColor: ColorResult, event: MouseEvent) => {
-    const target = COLORS.find((colorEl) => colorEl.code === targetColor.hex);
+    const target = colorEntries.find((colorEl) => colorEl.code === targetColor.hex);
     if (target !== undefined) {
       const targetElement = event.target as HTMLDivElement;
       if (targetElement.title !== target.name) targetElement.title = target.name;

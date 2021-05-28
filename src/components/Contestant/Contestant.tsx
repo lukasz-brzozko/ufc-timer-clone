@@ -32,12 +32,14 @@ function Contestant({
   const properContestant = contestants.find((contestant) => contestant.id === id);
 
   const {
-    champion, color, lastName, rank,
+    champion, color: { code, name, textColor: text }, lastName, rank,
   } = properContestant as ContestantType;
+
+  const textStyles = { color: text };
+  const colorBlockStyles = { backgroundColor: code };
 
   const modifierClass = isSecond ? ` ${styles.colorSignSecond}` : '';
   const ranking = champion ? 'C' : rank;
-
   return (
     <div className={styles.contestant} ref={refContestant}>
       <div className={styles.container} ref={refTextBlock}>
@@ -45,10 +47,17 @@ function Contestant({
           <span className={styles.rank}>{ranking}</span>
           <span className={styles.name}>{lastName}</span>
         </div>
-        <span className={`${styles.colorSign}${modifierClass}`} ref={refColorSign} />
+        <span className={`${styles.colorSign}${modifierClass}`} ref={refColorSign} style={colorBlockStyles} />
       </div>
-      <div className={styles.color} ref={refColor}>
-        <span className={styles.colorText} ref={refColorText}>{color}</span>
+      <div className={styles.color} ref={refColor} style={colorBlockStyles}>
+        <span
+          className={styles.colorText}
+          ref={refColorText}
+          style={textStyles}
+        >
+          {name}
+
+        </span>
       </div>
     </div>
   );
