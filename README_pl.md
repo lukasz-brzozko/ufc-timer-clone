@@ -10,3 +10,8 @@ Klon zegara wykorzystywanego podczas walk w największej federacji MMA. Jednakż
 ## Zdjęcia
 
 <img src="./readme-assets/ufc-timer.gif" alt="podgląd projektu"/>
+
+
+## Demo
+
+https://lukasz-brzozko.github.io/ufc-timer-clone/

@@ -10,3 +10,8 @@ A clone of the clock used during the fights in the largest MMA federation. This 
 ## Screenshots
 
 <img src="./readme-assets/ufc-timer.gif" alt="podgląd projektu"/>
+
+
+## Demo
+
+https://lukasz-brzozko.github.io/ufc-timer-clone/
