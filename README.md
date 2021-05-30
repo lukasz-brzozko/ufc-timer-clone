@@ -1,6 +1,6 @@
 [Polish](README_pl.md) :point_left:
 
-> :warning: **Work on the project has not been completed. The control panel can cause unwanted behavior throughout the entire application**
+> :warning: **The development has not been completed. The control panel can cause unwanted behavior throughout the entire application**
 
 # UFC timer
 
